@@ -1,0 +1,119 @@
+<form class="filter">
+
+    
+    <div class="row">
+
+        <div class="form-group col-md-3">
+            <label for="region">Région</label>
+            {{#region-filter-input uniqueSelection=spec.selectedRegion selectionMaxLength=1 as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.nom}}
+                {{else if part.isSelectedValue}}
+                    {{o.nom}}
+                {{/if}}
+            {{/region-filter-input}}
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="departement">Département</label>
+            {{#departement-filter-input uniqueSelection=spec.selectedDepartement selectionMaxLength=1 reg=spec.codeRegion as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.nom}}
+                {{else if part.isSelectedValue}}
+                    {{o.nom}}
+                {{/if}}
+            {{/departement-filter-input}}
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="commune">Commune</label>
+            {{#commune-filter-input uniqueSelection=spec.selectedCommune selectionMaxLength=1 dept=spec.codeDepartement reg=spec.codeRegion as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.nom}} ({{o.codeDpt}})
+                {{else if part.isSelectedValue}}
+                    {{o.nom}} ({{o.codeDpt}})
+                {{/if}}
+            {{/commune-filter-input}}
+        </div>
+        <div class="form-group col-md-3">
+            <div class="checkbox u-inline">
+                <label></label>
+                <label>
+                    {{input type="checkbox" checked=filterByUserOrganismeSelected}} Ne voir que les traçages de mon organisme
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label>Date de l'injection</label>
+                
+            <div class="row">
+                <div class="b24 col-md-2 no-gutter-right-md control-label">Du</div>
+                <div class="b24 col-md-10 half-gutter-right-md">
+                    {{date-picker class="form-control" date=spec.dateDebutInjection placeholder="dd/mm/yyyy"}}
+                </div>
+                <div class="b24 col-md-2 half-gutter-md control-label">au</div>
+                <div class="b24 col-md-10 half-gutter-left-md">
+                    {{date-picker class="form-control" date=spec.dateFinInjection placeholder="dd/mm/yyyy"}}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="maitre">Maitre d'ouvrage</label>
+            {{#async-filter-input uniqueSelection=spec.selectedMaitreOuvrage 
+                selectionMaxLength=1 endpoint="lexique/maitre-ouvrage/list" as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.nom}}
+                {{else if part.isSelectedValue}}
+                    {{o.nom}}
+                {{/if}}
+            {{/async-filter-input}}
+        </div>
+        
+        <div class="form-group col-md-4">
+            <label for="objectif">Objectif du traçage</label>
+            {{input value=spec.objectifTracage class="form-control" type="text"}}
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label for="operateur">Opérateur</label>
+            {{input value=spec.operateur class="form-control" type="text"}}
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="entite">Entité hydrogéologique</label>
+            {{#multi-value-input uniqueSelection=spec.selectedEntiteHydrogeol selectionMaxLength=1 suggestionProvider=LexiqueService.data.LexEntiteHydrogeol filterField="libelle" queryMinLength=0 as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.libelle}}
+                {{else if part.isSelectedValue}}
+                    {{o.libelle}}
+                {{/if}}
+            {{/multi-value-input}}
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="masse">Masse d'eau</label>
+            {{#multi-value-input uniqueSelection=spec.selectedMasseEau selectionMaxLength=1 suggestionProvider=LexiqueService.data.LexMeso filterField="libelle" queryMinLength=0 as |part o this|}}
+                {{#if part.isSuggestionRow}}
+                    {{o.libelle}}
+                {{else if part.isSelectedValue}}
+                    {{o.libelle}}
+                {{/if}}
+            {{/multi-value-input}}
+        </div>
+
+    </div>
+    
+
+
+
+</form>

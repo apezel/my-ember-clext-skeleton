@@ -1,0 +1,38 @@
+<div class="form-row with-separator">
+    <div class="col-md-2 u-ta-right">
+        <label for="libelle" >Libellé * </label>
+    </div>
+    <div class="col-md-4">
+        {{input  id="libelle" value=model.libelle type="text" class="form-control" maxlength=collection.libelleMaxSize}}
+    </div>
+</div>
+
+{{#if collection.hasDefinition}}
+    <div class="form-row with-separator">
+        <div class="col-md-2 u-ta-right">
+            <label for="definition" >Définition</label>
+        </div>
+        <div class="col-md-4">
+            {{x-textarea value=model.definition id="definition" maxlength=collection.definitionMaxSize }}
+        </div>
+    </div>
+{{/if}}
+
+{{#if collection.hasFamille}}
+    <div class="form-row with-separator">
+        <div class="col-md-2 u-ta-right">
+            <label for="famille" >Famille</label>
+        </div>
+        <div class="col-md-4">
+
+        {{#multi-value-input uniqueSelection=model.familleId selectionMaxLength=1 queryMinLength=0 filterField="libelle" suggestionProvider=assoc as |part o this| }}
+            {{#if part.isSuggestionRow}}
+                {{o.libelle}}
+            {{else if part.isSelectedValue}}
+                {{o.libelle}}
+            {{/if}}
+        {{/multi-value-input}}
+
+        </div>
+    </div>
+{{/if}}

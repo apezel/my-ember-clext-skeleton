@@ -1,0 +1,26 @@
+{
+  "name": "skeleton",
+  "version": "0.0.0",
+  "authors": [
+    "Arnaud PEZEL <arnaud@apyx.fr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember": "~2.0.1",
+    "moment": "~2.10.6",
+    "bootstrap-sass-official": "~3.3.5",
+    "ember-load-initializers": "https://github.com/apezel/ember-load-initializers.git#~0.1.10",
+    "d3": "~3.5.6",
+    "proj4": "~2.3.10"
+  },
+  "resolutions": {
+    "proj4": "~2.3.10"
+  }
+}

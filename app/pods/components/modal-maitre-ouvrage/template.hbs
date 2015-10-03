@@ -1,0 +1,72 @@
+{{#x-modal title="Selectionner un maître d'ouvrage" name="maitreOuvrage-modal" onShow="onShowModal" as |facet self|}}
+
+    {{#if facet.isHeadNote}}
+
+        <div class="head-note"><small><i>* informations obligatoires</i></small></div>
+
+    {{else if facet.isBody}}
+
+        <div class="form-row with-separator">
+
+            <div class="col-md-12">
+                <label>
+                    {{radio-button binding=mode value=Modes.SELECT name="maitresOuvrageMode"}}
+                    Je souhaite sélectionner un maître d'ouvrage existant.
+                </label>
+            </div>
+
+            {{#if modeIsSelection}}
+
+            <div class="col-md-2 u-ta-right">
+                <label>Nom *</label>
+            </div>
+
+            <div class="col-md-10">
+                {{#async-filter-input uniqueSelection=maitreOuvrage
+                    selectionMaxLength=1 endpoint="lexique/maitre-ouvrage/list" exclusions=exclude as |facet o this|}}
+                        {{#if facet.isSuggestionRow}}
+                            {{o.nom}}
+                            {{else if facet.isSelectedValue}}
+                                {{o.nom}}
+                            {{/if}}
+                        {{/async-filter-input}}
+            </div>
+            {{/if}}
+
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-12">
+                <label>
+                    {{radio-button binding=mode value=Modes.CREATE name="maitresOuvrageMode"}}
+                    Mon maître d'ouvrage n'existe pas, je le crée.
+                </label>
+            </div>
+
+                {{#if modeIsCreation}}
+
+                    <div class="col-md-2 u-ta-right">
+                        <label>Nom *</label>
+                    </div>
+
+                    <div class="col-md-10">
+                        {{input type="text" value=maitreOuvrage.nom class="form-control"}}
+                    </div>
+                {{/if}}
+
+        </div>
+
+    {{/if}}
+
+        {{#if facet.isFooter}}
+            <div class="col-md-12 ">
+                <button class="btn btn-cancel pull-left" {{action 'cancelSelection'}}>Annuler</button>
+                <button class="btn btn-success pull-right" {{action 'validateSelection'}}>Valider</button>
+            </div>
+        {{/if}}
+
+
+    {{/x-modal}}
+
+
+

@@ -1,0 +1,80 @@
+{{#affixable-header class="workspace-header" affixable=(on-route CurrentRoute.path 'organisms.index')}}
+
+    <div class="workspace-mainInfos">
+        <h2 class="workspace-title">Administrer les organismes</h2>
+    </div>
+
+    <div class="workspace-contextual">
+        {{#link-to "organisms.edit" "new" class="btn btn-info"}}<i class="icon-plus"></i>  Créer un organisme{{/link-to}}
+    </div>
+
+{{/affixable-header}}
+
+{{page-filter layoutName="components/page-filter/organism" spec=spec onTriggerFilter=(action 'filter')}}
+
+{{#x-table data=model pageInfo=pageInfo onRefresh="refresh" as |facet row self|}}
+    {{#if facet.isThead}}
+
+            {{#x-table.x-th sortPath="nom"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Nom
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="typeId.libelle"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Type
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="adresse"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Adresse
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="contactName"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Nom et prénom du contact
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="contactPhone"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Téléphone du contact
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="contactMail"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Mail du contact
+            {{/x-table.x-th}}
+
+            <th class="action-column">#</th>
+
+    {{else if facet.isBodyRow}}
+
+        <tr>
+            <td>{{row.nom}}</td>
+            <td>{{row.typeId.libelle}}</td>
+            <td>{{row.adresse}}</td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.contactPhone}}</td>
+            <td>{{row.contactMail}}</td>
+            <td class="action-column">
+                <a {{action 'edit' row}} class="btn-action icon-edit"></a>
+                <a {{action 'remove' row}} class="btn-action icon-trash"></a>
+            </td>
+        </tr>
+    
+    {{else if facet.isNoResult}}
+
+        <tr>
+             <td class="no-result" colspan="100">Aucun résultat</td>
+        </tr>
+
+    {{/if}}
+
+{{/x-table}}
+{{outlet}}

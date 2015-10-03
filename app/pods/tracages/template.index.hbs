@@ -1,0 +1,133 @@
+{{#affixable-header class="workspace-header"}}
+
+    <div class="workspace-mainInfos">
+        <h2 class="workspace-title">Rechercher un traçage</h2>
+    </div>
+
+    <div class="workspace-contextual">
+        {{#link-to "tracages.edit" "new" class="btn btn-info"}}<i class="icon-plus"></i>  Créer un traçage{{/link-to}}
+    </div>
+
+{{/affixable-header}}
+
+{{page-filter.tracage spec=spec onTriggerFilter=(action 'filter')}}
+
+{{#x-table data=model pageInfo=pageInfo onRefresh="refresh" as |facet row self|}}
+    {{#if facet.isThead}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.dateInjection"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Date de l'injection
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.obsPointId.pointId.inseeCommune.nom"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Commune de l'injection
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.obsPointId.pointId.pointTracageDesignations.designation"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Désignation du point d'injection
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="objectifTracage"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Objectif du traçage
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.traceurId.libelle"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Traceur
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="estPrive"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Visibilité
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="statutId.libelle"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Statut
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="maitreOuvrages.nom"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Maître d'ouvrage
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="operateur"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Opérateur
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.obsPointId.pointId.pointEntiteHydrogeols.entiteHydrogeolId.libelle"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Entité Hydrogéologique
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="pointInjectionId.obsPointId.pointId.pointMasseEaux.masseEauId.libelle"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Masse d'eau
+            {{/x-table.x-th}}
+
+            <th class="action-column">#</th>
+
+    {{else if facet.isBodyRow}}
+
+        <tr>
+            <td>{{format-date row.pointInjectionId.dateInjection format="DD/MM/YYYY" noValue="-"}}</td>
+            <td>
+                {{#if row.pointInjectionId.obsPointId.pointId.inseeCommune}}
+                {{row.pointInjectionId.obsPointId.pointId.inseeCommune.nom}} ({{row.pointInjectionId.obsPointId.pointId.inseeCommune.codeDpt}})
+                {{/if}}
+            </td>
+            <td>
+                {{#each row.pointInjectionId.obsPointId.pointId.pointTracageDesignations as |o|}}
+                <div class="designation">{{o.designation}}</div>
+                {{/each}}
+            </td>
+            <td>{{row.objectifTracage}}</td>
+            <td>{{row.pointInjectionId.traceurId.libelle}}</td>
+            <td>{{if row.estPrive 'Privée' 'Publique'}}</td>
+            <td>{{row.statutId.libelle}}</td>
+            <td>
+                {{#each row.maitreOuvrages as |o|}}
+                <div class="maitre-ouvrage">{{o.nom}}</div>
+                {{/each}}
+            </td>
+            <td>{{#if row.organismeId}} {{row.organismeId.nom}} {{ else }} {{row.operateur}} {{/if}}</td>
+            <td>
+                {{#each row.pointInjectionId.obsPointId.pointId.pointEntiteHydrogeols as |o|}}
+                <div class="entite-hydrogeol">{{o.entiteHydrogeolId.libelle}}</div>
+                {{/each}}
+            </td>
+            <td>
+                {{#each row.pointInjectionId.obsPointId.pointId.pointMasseEaux as |o|}}
+                <div class="masse-eau">{{o.masseEauId.libelle}}</div>
+                {{/each}}</td>
+            <td class="action-column">
+                <a {{action 'edit' row}} class="btn-action icon-edit"></a>
+                <a {{action 'remove' row}} class="btn-action icon-trash"></a>
+            </td>
+        </tr>
+    
+    {{else if facet.isNoResult}}
+
+        <tr>
+             <td class="no-result" colspan="100">Aucun résultat</td>
+        </tr>
+
+    {{/if}}
+
+{{/x-table}}

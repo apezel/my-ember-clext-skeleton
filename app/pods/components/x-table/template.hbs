@@ -1,0 +1,49 @@
+{{!
+    Style: components/table
+    EmberComponent : x-table.js
+}}
+
+<table class="table">
+
+    <thead class="header">
+        <tr>
+            {{yield (x-facet 'thead') firstRow this}}
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {{#if data.length}}
+    {{#each data as |row index|}}
+        {{yield (x-facet 'bodyRow') row this index}}
+    {{/each}}
+    {{else}}
+        {{yield (x-facet 'noResult') '' this 0}}
+    {{/if}}
+    </tbody>
+    
+</table>
+
+{{#if paginable}}
+<div class="navigation-controls">
+    {{#if pageInfo.totalElements}}
+    <ul class="pagination pagination-sm">
+
+        {{#if hasPrevious}}
+        <li><a {{action 'jumpToFirst'}}>&lt;&lt;</a></li>
+        <li><a {{action 'previous'}}>&lt;</a></li>
+        {{/if}}
+
+        {{#each nearestIndexes as |index|}}
+        <li class="{{if (x-eq pageInfo.number index) 'active'}}"><a {{action 'navigateTo' index}}>{{plus-one index}}</a></li>
+        {{/each}}
+
+        {{#if hasNext}}
+        <li><a {{action 'next'}}>&gt;</a></li>
+        <li><a {{action 'jumpToLast'}}>&gt;&gt;</a></li>
+        {{/if}}
+
+    </ul>
+    {{/if}}
+</div>
+{{/if}}

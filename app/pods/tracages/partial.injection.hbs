@@ -1,0 +1,281 @@
+<h3 class="form-section-title">
+    Description du point de traçage
+</h3>
+
+
+<div class="form-row with-separator">
+
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Point d'injection *</label>
+    </div>
+
+    <div class="col-md-10">
+        <div class="col-md-9 cartouche-point-injection">
+            <div class="b24 col-md-11 infos-point">
+                <div class="row">
+                    <div class="col-md-5 u-ta-right">
+                        <label for="milieu" >Id interne</label>
+                    </div>
+                    <div class="col-md-7">
+                        1234
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 u-ta-right">
+                        <label for="milieu" >Désignation</label>
+                    </div>
+                    <div class="col-md-7">
+                        Désignation
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 u-ta-right">
+                        <label for="milieu" >Commune</label>
+                    </div>
+                    <div class="col-md-7">
+                        GRENOBLE (38)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a class="btn btn-primary btn-sm"><i class="icon icon-edit"></i> Editer le point</a>
+                    </div>
+                </div>
+            </div>
+            <div class="b24 col-md-13">
+                {{leaflet-map
+                features=(array-wrap tracage.pointInjectionId.obsPointId.pointId.centroidAsFeatureL93)
+                communeWww=tracage.pointInjectionId.obsPointId.pointId.inseeCommune.numero
+                }}
+                <!--
+                                        <div class="map-tools-overlay">
+                                            <a class="tool"><i class="icon icon-edit"></i></a>
+                                        </div>
+                -->
+                <div class="fake-shadow"></div>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                {{!button-icon label="Sélectionner un point" class="form-action"}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="form-row with-separator">
+
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Date de l'observation</label>
+    </div>
+
+    <div class="col-md-2">
+        {{date-picker class="form-control" date=tracage.pointInjectionId.obsPointId.dateDescription placeholder="jj/mm/aaaa" dateFormat="dd/mm/yyyy"}}
+    </div>
+</div>
+
+<div class="form-row with-separator">
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Nature du point</label>
+    </div>
+    <div class="col-md-4">
+        {{x-select value=(mut tracage.operateur) id="naturePoint" labelField="libelle"  values=LexiqueService.data.LexNaturePoint }}
+    </div>
+</div>
+
+<div class="form-row with-separator">
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Contexte géomorphique</label>
+    </div>
+    <div class="col-md-4">
+        {{x-select value=(mut tracage.pointInjectionId.obsPointId.contexteGeomorphoId) id="contextGeomorphic" labelField="libelle" values=LexiqueService.data.LexGeomorpho}}
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Commentaire nature</label>
+    </div>
+    <div class="col-md-4">
+        {{x-textarea value=(mut tracage.remarquesGenerales) key="commentNaturePoint"}}
+    </div>
+</div>
+
+<h3 class="form-section-title">Description de l'injection</h3>
+
+<div class="form-row with-separator">
+
+    <div class="col-md-2 u-ta-right">
+        <label for="milieu" >Date de l'injection</label>
+    </div>
+
+    <div class="col-md-2">
+        {{date-picker class="form-control" date=tracage.pointInjectionId.dateInjection placeholder="jj/mm/aaaa" dateFormat="dd/mm/yyyy"}}
+    </div>
+
+    <div class="col-md-1">
+        <label for="modeInjection" >Mode d'injection</label>
+    </div>
+
+    <div class="col-md-3">
+        {{x-select value=(mut tracage.pointInjectionId.modeInjectionId) id="modeInjection" labelField="libelle" values=LexiqueService.data.LexModeInjection}}
+    </div>
+
+    <div class="col-md-1">
+        <label for="dureeObservation">Durée de l'injection</label>
+    </div>
+
+    <div class="col-md-1">
+        {{x-input-number numericValue=tracage.pointInjectionId.dureeInjection id="dureeObservation" class="form-control u-inline h-marged"}}
+    </div>
+
+</div>
+
+<div class="form-row with-separator">
+
+    <div class="col-md-2 u-ta-right">
+        <label for="comments">Aménagements</label>
+    </div>
+
+
+<div class="col-md-10">
+ {{#x-table data=tracage.pointInjectionId.amenagementInjections paginable=false as |facet row self|}}
+    {{#if facet.isThead}}
+            <th>Type d'aménagement</th>
+            <th>Commentaires</th>
+            <th class="action-column">#</th>
+        {{else if facet.isBodyRow}}
+                <tr>
+                    <td>{{row.typeAmenagementId.libelle}}</td>
+                    <td>{{row.commentaires}}</td>
+                    <td class="action-column">
+                        <a {{action 'edit' row}} class="btn-action icon-edit"></a>
+                        <a {{action 'remove' row}} class="btn-action icon-trash"></a>
+                    </td>
+                </tr>
+            {{else if facet.isNoResult}}
+                    <tr>
+                        <td class="no-result" colspan="100">Aucun aménagement</td>
+                    </tr>
+            {{/if}}
+        {{/x-table}}
+            <div class="u-ta-right">
+                {{button-icon label="Ajouter un aménagement" action="openModal" param='amenagementInjection-modal' class="form-action no-top-radius no-border-top"}}
+            </div>
+        </div>
+
+        </div>
+
+        <div class="form-row with-separator">
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Traceur</label>
+            </div>
+            <div class="col-md-4">
+                {{x-select value=(mut tracage.pointInjectionId.traceurId) id="traceur" labelField="libelle"  values=LexiqueService.data.LexTraceur}}
+            </div>
+        </div>
+
+        <div class="form-row with-separator">
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Traceur opportuniste</label>
+            </div>
+            <div class="col-md-4">
+                {{input value=tracage.pointInjectionId.traceurOpportuniste id="traceurOpportuniste" type="text" class="form-control"}}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Quantité de traceur</label>
+            </div>
+            <div class="col-md-2">
+                {{x-input-number numericValue=tracage.pointInjectionId.quantiteTraceur id="qteTraceur" type="text" class="form-control"}}
+            </div>
+            <div class="col-md-2">
+                {{x-select value=(mut tracage.pointInjectionId.uniteQteTraceurId) id="uniteQteTraceur" labelField="libelle" values=LexiqueService.data.LexUniteQuantiteTraceur}}
+            </div>
+
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Concentration de traceur</label>
+            </div>
+
+            <div class="col-md-2">
+                {{x-input-number numericValue=tracage.pointInjectionId.concentrationTraceur id="concTraceur" type="text" class="form-control"}}
+            </div>
+            <div class="col-md-2">
+                {{x-select value=(mut tracage.pointInjectionId.uniteConcTraceurId) id="concentrationTraceur" labelField="libelle" values=LexiqueService.data.LexUniteConcentrationTraceur}}
+            </div>
+
+
+        </div>
+
+        <div class="form-row with-separator">
+            <div class="col-md-2 col-md-offset-6 u-ta-right">
+                <label for="comments">Volume de solution</label>
+            </div>
+            <div class="col-md-2">
+                <input id="volumeSolution" type="text" class="form-control" value=""/>
+            </div>
+            <div class="col-md-2">
+                {{x-select value=(mut tracage.pointInjectionId.uniteVolSolutionId) id="volumeSolution" values=LexiqueService.data.LexUniteVolume}}
+            </div>
+        </div>
+
+        <div class="form-row with-separator">
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Mode de chasse</label>
+            </div>
+            <div class="col-md-4">
+                {{x-select value=(mut tracage.pointInjectionId.modeChasseId) id="uniteVolSoluion" labelField="libelle" values=LexiqueService.data.LexModeChasse}}
+            </div>
+            <div class="col-md-2 u-ta-right">
+                <label for="comments">Volume de la chasse</label>
+            </div>
+            <div class="col-md-2">
+                {{x-input-number numericValue=tracage.pointInjectionId.volumeChasse id="volChasse" type="text" class="form-control"}}
+            </div>
+            <div class="col-md-2">
+                {{x-select value=(mut tracage.pointInjectionId.uniteVolChasseId) id="volumeChasseId" labelField="libelle" values=LexiqueService.data.LexUniteVolume}}
+            </div>
+        </div>
+
+        <div class="form-row  with-separator">
+            <div class="col-md-2 u-ta-right">
+                <label for="vitesseAbsorption">Vitesse d'absorption</label>
+            </div>
+            <div class="col-md-4">
+                {{x-select value=(mut tracage.operateur) id="vitesseAbsorption" labelField="libelle" values=Operateurs}}
+            </div>
+            <div class="col-md-2 u-ta-right">
+                <label for="volumeSolution">Epaisseur ZNS</label>
+            </div>
+            <div class="col-md-2">
+                <input id="qteTraceur" type="text" class="form-control" value=""/>
+            </div>
+            <div class="col-md-2">
+                {{x-select value=(mut tracage.pointInjectionId.epaisseurZnsId) id="volumeSolution" labelField="libelle" values=LexiqueService.data.LexEpaisseurZns}}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-2 u-ta-right">
+                <label for="commentInjection">Commentaire</label>
+            </div>
+            <div class="col-md-4">
+                {{x-textarea value=(mut tracage.pointInjectionId.commentaire) key="commentInjection"}}
+            </div>
+        </div>
+
+        <h3 class="form-section-title">Images</h3>
+
+        <div class="form-row">
+            <div class="col-md-2 u-ta-right">
+                <label for="milieu">Images</label>
+            </div>
+
+            <div class="col-md-10">
+                {{button-icon label="Ajouter" icon="icon-now_wallpaper" type="file" class="form-action add-image"}}
+            </div>
+        </div>

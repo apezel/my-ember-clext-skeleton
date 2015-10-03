@@ -1,0 +1,19 @@
+{
+  "name": "skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Brocfile.js",
+  "scripts": {
+    "test": "karma start",
+    "build": "broccoli-clext build ../resources/static --hot-css",
+    "build:win": "broccoli-clext build ../resources/static --hot-css --no-watchman"
+  },
+  "author": "Arnaud PEZEL <arnaud@apyx.fr> (http://www.apyx.fr)",
+  "license": "ISC",
+  "devDependencies": {
+	"my-ember-brocfile-core": "https://github.com/apezel/my-ember-brocfile-core.git",
+    "broccoli-autoprefixer": "^3.0.0",
+    "broccoli-sass-source-maps": "^1.2.0"
+  },
+  "dependencies": {}
+}

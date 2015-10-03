@@ -1,0 +1,54 @@
+{{#x-modal title="Editer un aménagement" name="amenagementInjection-modal" onShow="onShowModal" as |facet self|}}
+
+    {{#if facet.isHeadNote}}
+
+        <div class="head-note"><small><i>* informations obligatoires</i></small></div>
+
+    {{else if facet.isBody}}
+
+        <div class="form-row with-separator">
+
+            <div class="col-md-3">
+                <label>Type d'aménagement *</label>
+            </div>
+
+            <div class="col-md-9">
+                {{#multi-value-input uniqueSelection=amenagementInjection.typeAmenagementId
+                    suggestionProvider=LexiqueService.data.LexAmenagementInjection
+                    selectionMaxLength=1 queryMinLength=0
+                    filterField="libelle" as |facet o this|}}
+                
+                    {{#if facet.isSuggestionRow}}
+                        {{o.libelle}}
+                    {{else if facet.isSelectedValue}}
+                        {{o.libelle}}
+                    {{/if}}
+                
+                {{/multi-value-input}}
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="col-md-3">
+                <label>Commentaires</label>
+            </div>
+
+            <div class="col-md-9">
+                {{x-textarea value=amenagementInjection.commentaires maxlength=2000}}
+            </div>
+        </div>
+
+    {{/if}}
+
+    {{#if facet.isFooter}}
+        <div class="col-md-12 ">
+            <button class="btn btn-cancel pull-left" {{action 'cancelSelection'}}>Annuler</button>
+            <button class="btn btn-success pull-right" {{action 'validateSelection'}}>Valider</button>
+        </div>
+    {{/if}}
+
+{{/x-modal}}
+
+
+

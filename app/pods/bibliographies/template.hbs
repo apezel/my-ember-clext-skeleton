@@ -1,0 +1,69 @@
+<div id="upload-shims-container"></div>
+
+{{#affixable-header class="workspace-header" affixable=(on-route CurrentRoute.path 'bibiolgraphies.index' partial=true)}}
+
+    <div class="workspace-mainInfos">
+        <h2 class="workspace-title">Rechercher une bibliographie</h2>
+    </div>
+
+    <div class="workspace-contextual">
+        {{#link-to "bibliographies.edit" "new" class="btn btn-info"}}<i class="icon-plus"></i>  Créer une bibliographie{{/link-to}}
+    </div>
+
+{{/affixable-header}}
+
+{{page-filter layoutName="components/page-filter/source-info" spec=spec onTriggerFilter=(action 'filter')}}
+
+{{#x-table data=model pageInfo=pageInfo onRefresh="refresh" as |facet row self|}}
+    {{#if facet.isThead}}
+
+            {{#x-table.x-th sortPath="annee"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Année
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="auteurs"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Auteurs
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="organismes"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Organismes
+            {{/x-table.x-th}}
+
+            {{#x-table.x-th sortPath="titre"
+                sortBy=pageInfo.sortBy sortOrder=pageInfo.sortOrder
+                onSort=(action 'sortBy' target=self)}}
+                    Titre
+            {{/x-table.x-th}}
+
+            <th class="action-column">#</th>
+
+    {{else if facet.isBodyRow}}
+
+        <tr>
+            <td>{{row.annee}}</td>
+            <td>{{row.auteurs}}</td>
+            <td>{{row.organismes}}</td>
+            <td>{{row.titre}}</td>
+            <td class="action-column">
+                <a {{action 'edit' row}} class="btn-action icon-edit"></a>
+                <a {{action 'remove' row}} class="btn-action icon-trash"></a>
+            </td>
+        </tr>
+    
+    {{else if facet.isNoResult}}
+
+        <tr>
+             <td class="no-result" colspan="100">Aucun résultat</td>
+        </tr>
+
+    {{/if}}
+
+{{/x-table}}
+
+{{outlet}}

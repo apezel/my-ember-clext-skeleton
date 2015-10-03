@@ -1,0 +1,55 @@
+{{#affixable-header class="workspace-header no-white-space"}}
+
+    <div class="workspace-mainInfos">
+        <h2 class="workspace-title inline">Tracages</h2>
+
+        {{#if createMode }}
+            <h3 class="workspace-breadcrumb">Saisir un traçage</h3>
+        {{else}}
+            <h3 class="workspace-breadcrumb">Editer un traçage</h3>
+        {{/if}}
+    </div>
+
+    <div class="workspace-contextual">
+        {{partial 'tracages/status'}}
+    </div>
+
+    {{partial 'tracages/onglets'}}
+
+    <div class="head-note head-note--tracage">
+        <small><i>* informations obligatoires</i></small>
+    </div>
+
+{{/affixable-header}}
+
+<div class="col-xs-12">
+
+    {{#if viewIsGeneral}}
+        {{partial 'tracages/general'}}
+    {{/if}}
+
+    {{#if viewIsPoint}}
+        {{partial 'tracages/injection'}}
+    {{/if}}
+
+    {{#if viewIsMonitoring}}
+        {{partial 'tracages/monitoring'}}
+    {{/if}}
+
+    {{#if viewIsBiblio}}
+        {{partial 'tracages/biblio'}}
+    {{/if}}
+
+    <div class="form-row form-footer">
+        <div class="col-md-12 ">
+            <button class="btn btn-cancel pull-left" {{action 'cancel'}}>Annuler</button>
+            <button class="btn btn-success pull-right" {{action 'save'}}>Enregistrer</button>
+        </div>
+    </div>
+
+</div>
+
+{{outlet 'popups'}}
+{{modal-multi-tracage action='addMultiTracage' exclude=(array-wrap tracage.multiTracageId) }}
+{{modal-maitre-ouvrage action='addMaitresOuvrage' exclude=tracage.maitresOuvrageIds}}
+{{modal-amenagement-injection action='addAmenagementInjection'}}

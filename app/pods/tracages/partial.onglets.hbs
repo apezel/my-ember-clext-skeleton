@@ -1,0 +1,10 @@
+<div class="onglets btn-group">
+    <button {{action 'toView' views.GENERAL}} class="btn btn-default {{if viewIsGeneral 'active'}}">Général</button>
+    <button {{action 'toView' views.POINT}} class="btn btn-default {{if viewIsPoint 'active'}}">Point d'injection
+    </button>
+    <button {{action 'toView' views.MONITORING}} class="btn btn-default {{if viewIsMonitoring 'active'}}">Points de
+        surveillance
+    </button>
+    <button {{action 'toView' views.BIBLIO}} class="btn btn-default {{if viewIsBiblio 'active'}}">Bibliographies
+    </button>
+</div>
