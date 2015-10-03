@@ -4,6 +4,7 @@ var brocCore = require('./node_modules/my-ember-brocfile-core/Brocfile-core'),
 
 var app = {
         path: 'app',
+		configModule: require('app/config/environment'),
         destJs: '/js',
         imports: [
             'bower_components/d3/d3.js',
