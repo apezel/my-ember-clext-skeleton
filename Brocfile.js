@@ -1,4 +1,4 @@
-var brocCore = require('./bower_components/my-ember-brocfile-core/Brocfile-core'),
+var brocCore = require('./node_modules/my-ember-brocfile-core/Brocfile-core'),
     compileSass = require('broccoli-sass-source-maps'),
     autoprefixer = require('broccoli-autoprefixer');
 
