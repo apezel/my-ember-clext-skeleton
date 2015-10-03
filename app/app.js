@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import config from 'bdtracages-config';
+import config from 'skeleton-config';
 import Resolver from 'x-resolver/resolver';
 import loadInitializers from 'ember/load-initializers';
 

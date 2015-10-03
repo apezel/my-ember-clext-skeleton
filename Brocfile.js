@@ -1,4 +1,4 @@
-var brocCore = require('./Brocfile-core'),
+var brocCore = require('./bower_components/my-ember-brocfile-core/Brocfile-core'),
     compileSass = require('broccoli-sass-source-maps'),
     autoprefixer = require('broccoli-autoprefixer');
 
@@ -7,15 +7,9 @@ var app = {
         destJs: '/js',
         imports: [
             'bower_components/d3/d3.js',
-            'bower_components/proj4/dist/proj4.js',
-            'vendor/proj-l93.js',
-            'bower_components/leaflet/dist/leaflet.js',
-            'bower_components/Leaflet.EasyButton/src/easy-button.js',
             'bower_components/moment/moment.js',
             'bower_components/moment/locale/fr.js',
-            'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js',
-            'vendor/moxie.js',
-			'vendor/jquery-ui.min.js'
+            'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
         ]
     };
 

@@ -1,29 +1,8 @@
-{{! Application Header }}
 <header class="application-header">
-    <div class="inner">
-        {{partial 'partials/bandeau'}}
-        {{partial 'partials/user-box'}}
-    </div>
 </header>
-{{! End Application Header }}
 
-<div class="application-content">
-    <aside class="application-aside">
-        {{partial 'partials/primary-navigation'}}
-        <div class="rest">
-            {{#logo-affixable class="logo"}}
-                <img src="/images/logo-brgm.png" alt=""/>
-            {{/logo-affixable}}
-        </div>
-    </aside>
-    <main class="application-workspace">{{outlet}}</main>
-
-    {{! Primary nav + workspace }}
+<div class="application-body">
 </div>
 
-
-{{! Fixed | Overlays }}
-{{confirm-dialog name="confirm"}}
-{{x-growl}}
-
-{{! END Fixed | Overlays }}
+<div class="application-footer">
+</div>
