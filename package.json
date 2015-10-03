@@ -4,9 +4,8 @@
   "description": "",
   "main": "Brocfile.js",
   "scripts": {
-    "test": "karma start",
-    "build": "broccoli-clext build ../resources/static --hot-css",
-    "build:win": "broccoli-clext build ../resources/static --hot-css --no-watchman"
+    "build": "broccoli-clext build dist --hot-css",
+    "build:win": "broccoli-clext build dist --hot-css --no-watchman"
   },
   "author": "Arnaud PEZEL <arnaud@apyx.fr> (http://www.apyx.fr)",
   "license": "ISC",
